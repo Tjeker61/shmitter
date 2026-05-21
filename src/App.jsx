@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className={'app'}>
-      <ShmitterContext value={{user, stats}}>
+      <ShmitterContext value={{user, stats, setUser}}>
       <Navigation/>
       <Body/>
         </ShmitterContext>
