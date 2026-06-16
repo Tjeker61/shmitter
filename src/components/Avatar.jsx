@@ -1,20 +1,25 @@
-import {useContext} from "react";
-import {ShmitterContext} from "../utils/context.js";
+import {useDispatch, useSelector} from "react-redux";
+import {changeAvatar, changeName} from "../actions/userAction.js";
 
 const Avatar = ({size}) => {
-    const {user, setUser} = useContext(ShmitterContext);
+    const {avatar, name} = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
-    const changeAvatar = () => {
-        const newUrl = prompt('Enter new avatar source url:');
-
-        setUser({...user, avatar: newUrl});
-    }
 
     return (
         <div>
-            <img onClick={changeAvatar} className={`user-avatar ${size ?? ''}`}
-                 src={user.avatar}
-                 alt={user.name} />
+            <img onClick={() => {
+                const newUrl = prompt('Enter new avatar source url:');
+                dispatch(changeAvatar(newUrl))
+            }}
+                 onContextMenu={(e) => {
+                     e.preventDefault()
+                     const newName = prompt('Enter new name:');
+                     dispatch(changeName(newName))
+                 }}
+                 className={`user-avatar ${size ?? ''}`}
+                 src={avatar}
+                 alt={name} />
         </div>
     );
 };
